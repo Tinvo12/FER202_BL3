@@ -4,32 +4,30 @@ import { persons } from '../person';
 const PersonSearch = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Filter and sort persons
   const filteredAndSortedPersons = useMemo(() => {
-    // Filter by name (firstName + lastName)
+    
     const filtered = persons.filter(person => {
       const fullName = `${person.firstName} ${person.lastName}`.toLowerCase();
       return fullName.includes(searchTerm.toLowerCase());
     });
 
-    // Multi-criteria sort: isActive (true first), then age ascending, then lastName A→Z
+    
     return filtered.sort((a, b) => {
-      // First criteria: isActive (true first)
+      
       if (a.isActive !== b.isActive) {
         return b.isActive ? 1 : -1;
       }
       
-      // Second criteria: age ascending
+      
       if (a.age !== b.age) {
         return a.age - b.age;
       }
       
-      // Third criteria: lastName A→Z
       return a.lastName.localeCompare(b.lastName);
     });
   }, [searchTerm]);
 
-  // Calculate statistics using reduce
+  
   const statistics = useMemo(() => {
     return filteredAndSortedPersons.reduce((stats, person) => {
       stats.totalPeople += 1;
@@ -77,7 +75,7 @@ const PersonSearch = () => {
           </div>
         </div>
 
-        {/* Statistics Box */}
+      
         <div className="alert alert-info mb-4">
           <h6 className="mb-3">
             <i className="fas fa-chart-bar me-2"></i>
@@ -105,7 +103,7 @@ const PersonSearch = () => {
           </div>
         </div>
 
-        {/* Results List */}
+        
         <div className="d-flex justify-content-between align-items-center mb-3">
           <h6 className="mb-0">
             <i className="fas fa-list me-2"></i>
