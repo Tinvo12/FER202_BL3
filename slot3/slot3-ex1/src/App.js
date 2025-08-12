@@ -7,7 +7,7 @@ import FilterControls from './components/FilterControls';
 import ResultsInfo from './components/ResultsInfo';
 import CompanyTable from './components/CompanyTable';
 
-// Company data
+
 const companies = [
   { name: "Company One", category: "Finance", start: 1981, end: 2004 },
   { name: "Company Two", category: "Retail", start: 1992, end: 2008 },
@@ -21,18 +21,18 @@ const companies = [
 ];
 
 function App() {
-  // State management
+  
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOption, setSortOption] = useState('name');
   const [selectedCategory, setSelectedCategory] = useState('all');
 
-  // Get unique categories for filter dropdown
+ 
   const categories = useMemo(() => {
     const uniqueCategories = [...new Set(companies.map(company => company.category))];
     return ['all', ...uniqueCategories];
   }, []);
 
-  // Filter and sort companies
+ 
   const filteredAndSortedCompanies = useMemo(() => {
     let filtered = companies.filter(company => {
       const matchesSearch = company.name.toLowerCase().includes(searchTerm.toLowerCase());
@@ -40,7 +40,7 @@ function App() {
       return matchesSearch && matchesCategory;
     });
 
-    // Sort companies based on selected option
+  
     switch (sortOption) {
       case 'year-asc':
         return filtered.sort((a, b) => a.start - b.start);
@@ -53,9 +53,9 @@ function App() {
     }
   }, [searchTerm, sortOption, selectedCategory]);
 
-  // Handle search
+  
   const handleSearch = () => {
-    // Search is handled automatically by the useMemo hook
+    
   };
 
   return (
@@ -69,7 +69,7 @@ function App() {
               </Card.Header>
               
               <Card.Body className="p-4">
-                {/* Search and Filter Controls */}
+                
                 <Row className="mb-4">
                   <Col md={6} className="mb-3">
                     <SearchBar 
@@ -89,10 +89,10 @@ function App() {
                   </Col>
                 </Row>
 
-                {/* Results Count */}
+                
                 <ResultsInfo count={filteredAndSortedCompanies.length} />
 
-                {/* Company Table */}
+                
                 <CompanyTable companies={filteredAndSortedCompanies} />
               </Card.Body>
             </Card>
