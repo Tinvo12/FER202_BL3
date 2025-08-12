@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { persons } from '../person';
 
 const SkillRanking = () => {
-  // Calculate skill frequency using reduce
+  
   const skillRanking = useMemo(() => {
     const skillCount = persons.reduce((acc, person) => {
       person.skills.forEach(skill => {
@@ -11,7 +11,7 @@ const SkillRanking = () => {
       return acc;
     }, {});
 
-    // Convert to array and sort by count (descending)
+   
     return Object.entries(skillCount)
       .map(([skill, count]) => ({ skill, count }))
       .sort((a, b) => b.count - a.count);
