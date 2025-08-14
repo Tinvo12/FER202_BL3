@@ -3,7 +3,7 @@ import { Card, Button } from 'react-bootstrap';
 import { FaUsers, FaClock, FaUtensils, FaHeart } from 'react-icons/fa';
 import './RecipeCard.css';
 
-const RecipeCard = ({ recipe, onViewRecipe, onAddFavourite }) => {
+const RecipeCard = ({ recipe, onViewRecipe, onAddFavourite, onRemoveFavourite, isFavourite }) => {
   return (
     <Card className="recipe-card">
       <div className="recipe-image-container">
@@ -37,13 +37,23 @@ const RecipeCard = ({ recipe, onViewRecipe, onAddFavourite }) => {
         </div>
         
         <div className="d-flex gap-2">
-          <Button 
-            variant="outline-danger" 
-            className="flex-grow-1"
-            onClick={() => onAddFavourite && onAddFavourite(recipe)}
-          >
-            <FaHeart className="me-2" /> Add to Favourite
-          </Button>
+          {isFavourite ? (
+            <Button 
+              variant="danger" 
+              className="flex-grow-1"
+              onClick={() => onRemoveFavourite && onRemoveFavourite(recipe)}
+            >
+              <FaHeart className="me-2" /> Remove Favourite
+            </Button>
+          ) : (
+            <Button 
+              variant="outline-danger" 
+              className="flex-grow-1"
+              onClick={() => onAddFavourite && onAddFavourite(recipe)}
+            >
+              <FaHeart className="me-2" /> Add to Favourite
+            </Button>
+          )}
           <Button 
             variant="success" 
             className="view-recipe-btn flex-grow-1"

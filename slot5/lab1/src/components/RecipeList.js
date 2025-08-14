@@ -3,7 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import RecipeCard from './RecipeCard';
 import './RecipeList.css';
 
-const RecipeList = ({ recipes, onViewRecipe, onAddFavourite }) => {
+const RecipeList = ({ recipes, onViewRecipe, onAddFavourite, onRemoveFavourite, favourites }) => {
   return (
     <section className="recipe-list-section">
       <Container>
@@ -14,6 +14,8 @@ const RecipeList = ({ recipes, onViewRecipe, onAddFavourite }) => {
                 recipe={recipe} 
                 onViewRecipe={onViewRecipe}
                 onAddFavourite={onAddFavourite}
+                onRemoveFavourite={onRemoveFavourite}
+                isFavourite={favourites?.some(r => r.title === recipe.title)}
               />
             </Col>
           ))}

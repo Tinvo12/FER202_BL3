@@ -180,6 +180,12 @@ function App() {
     setShowToast(true);
   };
 
+  const handleRemoveFavourite = (recipe) => {
+    setFavourites(prev => prev.filter(r => r.title !== recipe.title));
+    setToastMessage('Removed from favourites');
+    setShowToast(true);
+  };
+
   const handleSortChange = (option) => {
     setSortOption(option);
   };
@@ -223,6 +229,8 @@ function App() {
         recipes={paginatedRecipes} 
         onViewRecipe={handleViewRecipe}
         onAddFavourite={handleAddToFavourite}
+        onRemoveFavourite={handleRemoveFavourite}
+        favourites={favourites}
       />
 
       <Container className="my-4">
