@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
-import { CartContext } from "./CartContext";
-import Modal from "./Modal";
+import { CartContext } from "../context/CartContext";
+import { Card, ListGroup, Button, Row, Col, Modal, Alert } from "react-bootstrap";
 
 const Cart = () => {
   const { cartItems, removeFromCart, clearCart, totalValue } =
@@ -18,68 +18,82 @@ const Cart = () => {
   };
 
   const handleCheckout = () => {
-   
     setConfirmOpen(false);
     setSuccessOpen(true);
     clearCart();
   };
 
   return (
-    <div className="cart-section">
-      <h2>Giỏ hàng</h2>
-      {cartItems.length === 0 ? (
-        <p className="muted">Giỏ hàng của bạn đang trống.</p>
-      ) : (
-        <div>
-          <ul>
-            {cartItems.map((item) => (
-              <li key={item.id}>
-                <span>
-                  <strong>{item.name}</strong>
-                  <span style={{ marginLeft: 8, color: "#666" }}> - ${item.price}</span>
-                </span>
-                <button onClick={() => removeFromCart(item.id)}>Remove</button>
-              </li>
-            ))}
-          </ul>
-          <div className="cart-summary">
-            <div className="summary-row">
-              <span>Tổng số món</span>
-              <strong>{cartItems.length}</strong>
-            </div>
-            <div className="summary-row">
-              <span>Tổng giá trị</span>
-              <strong>${totalValue}</strong>
-            </div>
-            <div className="cart-actions">
-              <button onClick={clearCart}>Clear Cart</button>
-              <button className="btn-secondary" onClick={handleConfirmOrder}>Xác nhận đơn hàng</button>
-            </div>
-            {toast && <p className="status-msg">{toast}</p>}
-          </div>
-        </div>
-      )}
+    <Card className="mt-4">
+      <Card.Body>
+        <Card.Title as="h2" className="h4">Giỏ hàng</Card.Title>
+        {toast && (
+          <Alert variant="warning" className="my-2" onClose={() => setToast("")} dismissible>
+            {toast}
+          </Alert>
+        )}
+        {cartItems.length === 0 ? (
+          <p className="text-muted mb-0">Giỏ hàng của bạn đang trống.</p>
+        ) : (
+          <>
+            <ListGroup className="mb-3">
+              {cartItems.map((item) => (
+                <ListGroup.Item key={item.id} className="d-flex justify-content-between align-items-center">
+                  <span>
+                    <strong>{item.name}</strong>
+                    <span className="text-muted ms-2">- ${item.price}</span>
+                  </span>
+                  <Button variant="danger" size="sm" onClick={() => removeFromCart(item.id)}>Remove</Button>
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+            <Row className="g-2 align-items-center">
+              <Col xs="12" md>
+                <div className="d-flex justify-content-between">
+                  <span>Tổng số món</span>
+                  <strong>{cartItems.length}</strong>
+                </div>
+                <div className="d-flex justify-content-between">
+                  <span>Tổng giá trị</span>
+                  <strong>${totalValue}</strong>
+                </div>
+              </Col>
+              <Col xs="12" md="auto" className="d-flex gap-2 mt-2 mt-md-0">
+                <Button variant="outline-secondary" onClick={clearCart}>Clear Cart</Button>
+                <Button variant="secondary" onClick={handleConfirmOrder}>Xác nhận đơn hàng</Button>
+              </Col>
+            </Row>
+          </>
+        )}
+      </Card.Body>
 
       {/* Modal xác nhận đơn hàng */}
-      <Modal
-        open={confirmOpen}
-        title="Xác nhận đơn hàng"
-        onClose={() => setConfirmOpen(false)}
-        onConfirm={handleCheckout}
-        confirmLabel="Thanh toán"
-      >
-        <p>Bạn có chắc muốn thanh toán đơn hàng với tổng giá trị <strong>${totalValue}</strong>?</p>
+      <Modal show={confirmOpen} onHide={() => setConfirmOpen(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Xác nhận đơn hàng</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Bạn có chắc muốn thanh toán đơn hàng với tổng giá trị <strong>${totalValue}</strong>?</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setConfirmOpen(false)}>Hủy</Button>
+          <Button variant="primary" onClick={handleCheckout}>Thanh toán</Button>
+        </Modal.Footer>
       </Modal>
 
       {/* Modal thanh toán thành công */}
-      <Modal
-        open={successOpen}
-        title="Thanh toán thành công"
-        onClose={() => setSuccessOpen(false)}
-      >
-        <p>Cảm ơn bạn đã mua hàng. Đơn hàng của bạn đã được ghi nhận!</p>
+      <Modal show={successOpen} onHide={() => setSuccessOpen(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Thanh toán thành công</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Cảm ơn bạn đã mua hàng. Đơn hàng của bạn đã được ghi nhận!</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={() => setSuccessOpen(false)}>Đóng</Button>
+        </Modal.Footer>
       </Modal>
-    </div>
+    </Card>
   );
 };
 

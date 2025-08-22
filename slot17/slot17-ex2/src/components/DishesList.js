@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
-import { CartContext } from "./CartContext";
-
+import { CartContext } from "../context/CartContext";
+import { Row, Col, Card, Button, Form } from "react-bootstrap";
 
 const DishesList = ({ dishes }) => {
   const { addToCart } = useContext(CartContext);
@@ -17,29 +17,33 @@ const DishesList = ({ dishes }) => {
 
   return (
     <div>
-      <h2>Danh sách món ăn</h2>
-      <div className="search">
-        <input
+      <h2 className="mb-3">Danh sách món ăn</h2>
+      <Form className="mb-3">
+        <Form.Control
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Tìm theo tên hoặc mô tả..."
         />
-      </div>
-      <div className="dishes">
+      </Form>
+      {filteredDishes.length === 0 && (
+        <p className="text-muted">Không tìm thấy món phù hợp.</p>
+      )}
+      <Row xs={1} sm={2} md={3} lg={4} className="g-3">
         {filteredDishes.map((dish) => (
-          <div key={dish.id} className="dish-item">
-            <img src={dish.image} alt={dish.name} />
-            <h3>{dish.name}</h3>
-            <p>{dish.description}</p>
-            <p>{`Price: $${parseFloat(dish.price).toFixed(2)}`}</p>
-            <button onClick={() => addToCart(dish)}>Add to Cart</button>
-          </div>
+          <Col key={dish.id}>
+            <Card className="h-100">
+              <Card.Img variant="top" src={dish.image} alt={dish.name} style={{ height: 160, objectFit: "cover" }} />
+              <Card.Body>
+                <Card.Title>{dish.name}</Card.Title>
+                <Card.Text style={{ minHeight: 48 }}>{dish.description}</Card.Text>
+                <Card.Text className="fw-semibold">{`Price: $${parseFloat(dish.price).toFixed(2)}`}</Card.Text>
+                <Button variant="success" onClick={() => addToCart(dish)}>Add to Cart</Button>
+              </Card.Body>
+            </Card>
+          </Col>
         ))}
-        {filteredDishes.length === 0 && (
-          <p className="muted">Không tìm thấy món phù hợp.</p>
-        )}
-      </div>
+      </Row>
     </div>
   );
 };
