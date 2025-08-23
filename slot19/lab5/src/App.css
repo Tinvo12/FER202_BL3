@@ -158,6 +158,76 @@ body.dark-mode .carousel .carousel-item img {
   background-color: #2d2d2d;
 }
 
+/* Custom Carousel Controls - Điều khiển carousel tùy chỉnh */
+.carousel-controls {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  padding: 5px;
+  backdrop-filter: blur(5px);
+}
+
+.carousel-controls .btn {
+  border-radius: 6px;
+  font-size: 12px;
+  padding: 4px 8px;
+  min-width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Manual Navigation Buttons - Nút điều hướng thủ công */
+.carousel-manual-nav .btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.carousel-manual-nav .btn:hover {
+  background: rgba(0, 0, 0, 0.9);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: scale(1.1);
+}
+
+/* Custom Indicators - Dots tùy chỉnh */
+.custom-indicators {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  padding: 8px 12px;
+  backdrop-filter: blur(5px);
+}
+
+.indicator-dot {
+  transition: all 0.3s ease;
+}
+
+.indicator-dot:hover {
+  transform: scale(1.2);
+  background-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.indicator-dot.active {
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Slide Counter - Bộ đếm slide */
+.slide-counter {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+  padding: 4px 12px;
+  display: inline-block;
+  font-weight: 500;
+}
+
 /* Bootstrap carousel controls styling */
 .carousel-control-prev,
 .carousel-control-next {
@@ -273,6 +343,40 @@ body.dark-mode .carousel-caption {
   
   .carousel-caption {
     padding: 15px 10px 10px;
+  }
+  
+  /* Responsive controls for mobile */
+  .carousel-controls {
+    top: 5px;
+    right: 5px;
+    padding: 3px;
+  }
+  
+  .carousel-controls .btn {
+    min-width: 28px;
+    height: 28px;
+    font-size: 10px;
+  }
+  
+  .carousel-manual-nav .btn {
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+  }
+  
+  .custom-indicators {
+    bottom: 10px;
+    padding: 6px 10px;
+  }
+  
+  .indicator-dot {
+    width: 10px !important;
+    height: 10px !important;
+  }
+  
+  .slide-counter {
+    font-size: 12px;
+    padding: 3px 8px;
   }
 }
 
