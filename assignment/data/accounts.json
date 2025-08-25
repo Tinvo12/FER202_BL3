@@ -1,0 +1,36 @@
+[
+  {
+    "id": 1,
+    "username": "admin",
+    "email": "admin@example.com",
+    "password": "Admin@123",
+    "name": "Administrator",
+    "secretQuestion": "Your birthplace?",
+    "answer": "Earth",
+    "wishlist": [],
+    "avatar": "",
+    "address": {
+      "streetName": "Admin Street",
+      "streetNumber": "1",
+      "city": "Admin City",
+      "country": "Viet Nam"
+    }
+  },
+  {
+    "id": 2,
+    "name": "Võ Tin",
+    "email": "tinvo1209@gmail.com",
+    "avatar": "",
+    "username": "De180621",
+    "password": "Tintinvo1209*",
+    "secretQuestion": "What is your first pet's name?",
+    "answer": "Dino",
+    "address": {
+      "streetName": "1A National Street",
+      "streetNumber": "12",
+      "city": "Da Nang city",
+      "country": "Viet Nam"
+    },
+    "wishlist": []
+  }
+]
