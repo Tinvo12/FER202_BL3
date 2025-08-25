@@ -1,1 +1,24 @@
-[]
+[
+  {
+    "id": 1,
+    "userid": 3,
+    "items": [
+      {
+        "id": 3,
+        "title": "iPhone 13 Mini",
+        "price": 699,
+        "image": "/images/iphone13mini.jpg",
+        "qty": 1
+      },
+      {
+        "id": 1,
+        "title": "iPhone 15 Pro Max",
+        "price": 1099,
+        "image": "/images/iphone15promax.jpg",
+        "qty": 1
+      }
+    ],
+    "total": 1798,
+    "date": "2025-08-25T06:01:11.591Z"
+  }
+]

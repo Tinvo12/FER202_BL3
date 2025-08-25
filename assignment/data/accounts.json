@@ -32,5 +32,25 @@
       "country": "Viet Nam"
     },
     "wishlist": []
+  },
+  {
+    "id": 3,
+    "name": "Võ  Tin",
+    "email": "tintinvo1209@gmail.com",
+    "avatar": "",
+    "username": "DE180621 ",
+    "password": "Tintinvo12*",
+    "secretQuestion": "What is your first pet's name?",
+    "answer": "Dino ",
+    "address": {
+      "streetName": "1A National Street",
+      "streetNumber": "12",
+      "city": "Da Nang city",
+      "country": "Viet Nam"
+    },
+    "wishlist": [
+      3,
+      1
+    ]
   }
 ]
