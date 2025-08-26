@@ -1,0 +1,32 @@
+{
+    "travelAgency": {
+      "agencyName": "Happy Travel",
+      "location": "202 Adventure Avenue, Travel City",
+      "tours": [
+        {
+          "id": "1",
+          "tourName": "Ha Long Bay Cruise",
+          "img": "/images/tour1.jpeg",
+          "duration": "3 Days 2 Nights",
+          "price": 250.00,
+          "availableSeats": 20
+        },
+        {
+          "id": "2",
+          "tourName": "Sapa Mountain Trekking",
+          "img": "/images/tour2.jpg",
+          "duration": "4 Days 3 Nights",
+          "price": 300.00,
+          "availableSeats": 15
+        },
+        {
+          "id": "3",
+          "tourName": "Da Nang City Tour",
+          "img": "/images/tour3.jpg",
+          "duration": "1 Day",
+          "price": 80.00,
+          "availableSeats": 40
+        }
+      ]
+    }
+  }
