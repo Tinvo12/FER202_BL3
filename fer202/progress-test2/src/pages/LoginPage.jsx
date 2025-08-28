@@ -72,10 +72,33 @@ export default function LoginPage({ onClose }) {
     }
   };
 
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    
+    // Validate individual field on blur
+    if (name === 'email') {
+      if (!value) {
+        setErrors(prev => ({ ...prev, email: 'Email is required' }));
+      } else if (!/\S+@\S+\.\S+/.test(value)) {
+        setErrors(prev => ({ ...prev, email: 'Please enter a valid email address' }));
+      }
+    }
+    
+    if (name === 'password') {
+      if (!value) {
+        setErrors(prev => ({ ...prev, password: 'Password is required' }));
+      } else if (value.length < 6) {
+        setErrors(prev => ({ ...prev, password: 'Password must be at least 6 characters long' }));
+      }
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (!validateForm()) {
+      // Show alert for validation errors
+      showAlert('Please fix the errors in the form before submitting.', 'warning');
       return;
     }
 
@@ -103,6 +126,11 @@ export default function LoginPage({ onClose }) {
         }, 1500);
       } else {
         showAlert('Invalid email or password. Please try again.', 'danger');
+        // Add visual feedback by setting errors on both fields
+        setErrors({
+          email: 'Invalid email or password',
+          password: 'Invalid email or password'
+        });
       }
     } catch (error) {
       console.error('Login error:', error);
@@ -147,8 +175,10 @@ export default function LoginPage({ onClose }) {
                   placeholder="Enter your email address"
                   value={formData.email}
                   onChange={handleInputChange}
+                  onBlur={handleBlur}
                   isInvalid={!!errors.email}
                   disabled={loading}
+                  className={errors.email ? 'border-danger' : ''}
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.email}
@@ -164,8 +194,10 @@ export default function LoginPage({ onClose }) {
                     placeholder="Enter your password"
                     value={formData.password}
                     onChange={handleInputChange}
+                    onBlur={handleBlur}
                     isInvalid={!!errors.password}
                     disabled={loading}
+                    className={errors.password ? 'border-danger' : ''}
                   />
                   <Button
                     type="button"

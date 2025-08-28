@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useCallback } from 'react';
 
 const AuthContext = createContext();
 
@@ -19,10 +19,13 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(true);
   };
 
-  const logout = () => {
+  const logout = useCallback(() => {
+    const userName = user?.name || user?.email || 'User';
     setUser(null);
     setIsAuthenticated(false);
-  };
+    // Note: Toast will be shown from the component that calls logout
+    return userName;
+  }, [user]);
 
   const value = {
     user,

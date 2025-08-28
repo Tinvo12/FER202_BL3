@@ -1,12 +1,16 @@
 import React from 'react';
-import { Navbar, Nav, Container, Button, Badge } from 'react-bootstrap';
-import { FaHeart, FaShoppingCart, FaUser } from 'react-icons/fa';
+import { Navbar, Nav, Container, Button, Badge, Dropdown } from 'react-bootstrap';
+import { FaHeart, FaShoppingCart, FaUser, FaSignOutAlt, FaUserCircle } from 'react-icons/fa';
 import { useCart } from '../contexts/CartContext';
 import { useFavourites } from '../contexts/FavouritesContext';
+import { useAuth } from '../contexts/AuthContext';
+import { useToast } from '../contexts/ToastContext';
 
 const NavbarComponent = ({ onLoginClick, onCartClick, onFavouritesClick }) => {
   const { getCartCount } = useCart();
   const { getFavouritesCount } = useFavourites();
+  const { user, isAuthenticated, logout } = useAuth();
+  const { showToast } = useToast();
   const cartCount = getCartCount();
   const favouritesCount = getFavouritesCount();
 
@@ -53,13 +57,42 @@ const NavbarComponent = ({ onLoginClick, onCartClick, onFavouritesClick }) => {
                 </Badge>
               )}
             </Button>
-            <Button
-              variant="outline-info"
-              onClick={onLoginClick}
-            >
-              <FaUser className="me-1" />
-              Login
-            </Button>
+            {isAuthenticated ? (
+              <Dropdown>
+                <Dropdown.Toggle variant="outline-success" id="dropdown-user">
+                  <FaUserCircle className="me-1" />
+                  {user?.name || user?.email || 'User'}
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Header>
+                    <div className="d-flex align-items-center">
+                      <FaUserCircle className="me-2" />
+                      <div>
+                        <div className="fw-bold">{user?.name || 'User'}</div>
+                        <small className="text-muted">{user?.email}</small>
+                      </div>
+                    </div>
+                  </Dropdown.Header>
+                  <Dropdown.Divider />
+                  <Dropdown.Item onClick={() => {
+                    const userName = logout();
+                    showToast(`Goodbye, ${userName}! You have been logged out.`, 'info');
+                  }}>
+                    <FaSignOutAlt className="me-2" />
+                    Logout
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            ) : (
+              <Button
+                variant="outline-info"
+                onClick={onLoginClick}
+              >
+                <FaUser className="me-1" />
+                Login
+              </Button>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>
