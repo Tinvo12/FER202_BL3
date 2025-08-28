@@ -15,24 +15,9 @@ export default function LoginPage({ onClose }) {
   const [showPassword, setShowPassword] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const [alertVariant, setAlertVariant] = useState('');
-  const [serverStatus, setServerStatus] = useState('checking');
 
   const { login } = useAuth();
   const { showToast } = useToast();
-
-  // Check server status on component mount
-  React.useEffect(() => {
-    const checkServerStatus = async () => {
-      try {
-        await api.get('/accounts');
-        setServerStatus('connected');
-      } catch (error) {
-        setServerStatus('disconnected');
-      }
-    };
-    
-    checkServerStatus();
-  }, []);
 
   const showAlert = (message, variant = 'danger') => {
     setAlertMessage(message);
@@ -57,8 +42,8 @@ export default function LoginPage({ onClose }) {
     // Password validation
     if (!formData.password) {
       newErrors.password = 'Password is required';
-    } else if (formData.password.length < 8) {
-      newErrors.password = 'Password must be at least 8 characters long';
+    } else if (formData.password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters long';
     }
 
     setErrors(newErrors);
@@ -102,8 +87,8 @@ export default function LoginPage({ onClose }) {
     if (name === 'password') {
       if (!value) {
         setErrors(prev => ({ ...prev, password: 'Password is required' }));
-      } else if (value.length < 8) {
-        setErrors(prev => ({ ...prev, password: 'Password must be at least 8 characters long' }));
+      } else if (value.length < 6) {
+        setErrors(prev => ({ ...prev, password: 'Password must be at least 6 characters long' }));
       }
     }
   };
@@ -162,15 +147,7 @@ export default function LoginPage({ onClose }) {
       }
     } catch (error) {
       console.error('Login error:', error);
-      
-      // Check if it's a network/server connection error
-      if (error.code === 'ERR_NETWORK' || error.message.includes('Network Error') || error.message.includes('fetch')) {
-        showAlert('Gặp lỗi với dữ liệu nếu chưa chạy server. Vui lòng khởi động server và thử lại.', 'danger');
-      } else if (error.response?.status === 404) {
-        showAlert('Không tìm thấy dữ liệu tài khoản. Vui lòng kiểm tra server.', 'danger');
-      } else {
-        showAlert('Đăng nhập thất bại. Vui lòng kiểm tra kết nối và thử lại.', 'danger');
-      }
+      showAlert('Login failed. Please check your connection and try again.', 'danger');
     } finally {
       setLoading(false);
     }
@@ -185,26 +162,6 @@ export default function LoginPage({ onClose }) {
               <FaSignInAlt size={48} className="text-primary mb-3" />
               <h2>Login</h2>
               <p className="text-muted">Enter your credentials to continue</p>
-              
-              {/* Server Status Indicator */}
-              <div className="mt-3">
-                {serverStatus === 'checking' && (
-                  <small className="text-muted">
-                    <span className="spinner-border spinner-border-sm me-1" role="status"></span>
-                    Đang kiểm tra kết nối server...
-                  </small>
-                )}
-                {serverStatus === 'connected' && (
-                  <small className="text-success">
-                    ✅ Server đã kết nối
-                  </small>
-                )}
-                {serverStatus === 'disconnected' && (
-                  <small className="text-danger">
-                    ❌ Server chưa kết nối - Vui lòng khởi động server
-                  </small>
-                )}
-              </div>
             </div>
 
             {/* Alert Message */}
@@ -306,10 +263,6 @@ export default function LoginPage({ onClose }) {
                 Demo credentials: admin@example.com / Admin123@
                 <br />
                 <small>Active accounts: admin@example.com, traltb@fe.edu.vn</small>
-                <br />
-                <small className="text-warning">
-                  💡 Lưu ý: Đảm bảo server JSON đang chạy (npx json-server --watch db.json --port 3001)
-                </small>
               </small>
             </div>
           </Card.Body>

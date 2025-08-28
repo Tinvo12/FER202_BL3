@@ -15,6 +15,7 @@
    ```bash
    npm install
    ```
+   npm i react-router-dom axios bootstrap react-bootstrap react-icons prop-types
 
 ### Running the Application
 

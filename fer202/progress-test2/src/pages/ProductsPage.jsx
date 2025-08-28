@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Form, InputGroup, Button, Card, Spinner } from 'react-bootstrap';
-import { FaSearch, FaTimesCircle, FaFilter, FaSort, FaUser } from 'react-icons/fa';
+import { FaSearch, FaTimesCircle, FaFilter, FaSort } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import NavbarComponent from '../components/Navbar';
@@ -9,8 +9,7 @@ import { useProductFilters } from '../hooks/useProductFilters';
 import { useCart } from '../contexts/CartContext';
 import { useFavourites } from '../contexts/FavouritesContext';
 import { useToast } from '../contexts/ToastContext';
-import { useAuth } from '../contexts/AuthContext';
-import api from '../services/api';
+  import api from '../services/api';
 
 export default function ProductsPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -24,7 +23,6 @@ export default function ProductsPage() {
   const { addToCart } = useCart();
   const { toggleFavourite, isFavourite, getFavouritesCount } = useFavourites();
   const { showToast } = useToast();
-  const { user, isAuthenticated } = useAuth();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -42,15 +40,7 @@ export default function ProductsPage() {
         setProducts(normalized);
       } catch (error) {
         console.error('Error fetching products:', error);
-        
-        // Check if it's a network/server connection error
-        if (error.code === 'ERR_NETWORK' || error.message.includes('Network Error') || error.message.includes('fetch')) {
-          showToast('Gặp lỗi với dữ liệu nếu chưa chạy server. Vui lòng khởi động server và thử lại.', 'danger');
-        } else if (error.response?.status === 404) {
-          showToast('Không tìm thấy dữ liệu sản phẩm. Vui lòng kiểm tra server.', 'danger');
-        } else {
-          showToast('Không thể tải sản phẩm. Vui lòng kiểm tra kết nối và thử lại.', 'danger');
-        }
+        showToast('Failed to load products. Please check if the server is running.', 'danger');
       
         setProducts([
           {
@@ -133,18 +123,6 @@ export default function ProductsPage() {
         onFavouritesClick={handleFavouritesClick}
       />
       <Container className="py-4">
-        {isAuthenticated && (
-          <div className="mb-4">
-            <div className="alert alert-success d-flex align-items-center" role="alert">
-              <FaUser className="me-2" />
-              <div>
-                <strong>Welcome back, {user?.name || user?.email || 'User'}!</strong>
-                <br />
-                <small>You're now logged in and can enjoy all features.</small>
-              </div>
-            </div>
-          </div>
-        )}
         <h1 className="mb-4">Products</h1>
 
         <Card className="mb-4">
