@@ -42,7 +42,15 @@ export default function ProductsPage() {
         setProducts(normalized);
       } catch (error) {
         console.error('Error fetching products:', error);
-        showToast('Failed to load products. Please check if the server is running.', 'danger');
+        
+        // Check if it's a network/server connection error
+        if (error.code === 'ERR_NETWORK' || error.message.includes('Network Error') || error.message.includes('fetch')) {
+          showToast('Gặp lỗi với dữ liệu nếu chưa chạy server. Vui lòng khởi động server và thử lại.', 'danger');
+        } else if (error.response?.status === 404) {
+          showToast('Không tìm thấy dữ liệu sản phẩm. Vui lòng kiểm tra server.', 'danger');
+        } else {
+          showToast('Không thể tải sản phẩm. Vui lòng kiểm tra kết nối và thử lại.', 'danger');
+        }
       
         setProducts([
           {

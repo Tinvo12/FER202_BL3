@@ -59,19 +59,20 @@
       "category": "samsung"
     }
   ],
-  "users": [
+  "accounts": [
     {
-      "id": 1,
       "email": "admin@example.com",
-      "password": "password123",
-      "name": "Admin User",
+      "password": "Admin123@",
       "isActive": true
     },
     {
-      "id": 2,
-      "email": "user@example.com",
-      "password": "password123",
-      "name": "Regular User",
+      "email": "bobb@example.com",
+      "password": "Bobb123@",
+      "isActive": false
+    },
+    {
+      "email": "traltb@fe.edu.vn",
+      "password": "Traltb123@",
       "isActive": true
     }
   ]
